@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import API from '../../utils/api';
 import Progress from '../progress';
 import Movie from '../card';
@@ -20,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     color: '#e32402',
   },
+  marFix: {
+      marginTop: '24px'
+  }
 }));
 
 export default function Home() {
@@ -76,6 +80,11 @@ export default function Home() {
     }
   };
 
+  const handleClear = (e) => {
+    e.preventDefault();
+    setResult([]);
+  };
+
   String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
   };
@@ -115,6 +124,16 @@ export default function Home() {
             <Progress />
           ) : (
             <Grid container spacing={2} justify='center'>
+              <Grid container spacing={2} justify='center' className={classes.marFix}>
+                {/* <Grid item xs={12} justify='center'> */}
+                  <Button
+                    variant='contained'
+                    color='secondary'
+                    onClick={handleClear}>
+                    Clear
+                  </Button>
+                {/* </Grid> */}
+              </Grid>
               {result.map((res) => (
                 <Grid item xs={12} sm={6}>
                   <Movie
