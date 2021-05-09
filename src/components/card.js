@@ -38,12 +38,6 @@ export default function Movie({title, year, type, id, handleClick }) {
         <Typography variant="subtitle2" component="h2">
           {title}
         </Typography>
-        {/* <Typography className={classes.pos} color="textSecondary">
-          {actors}
-        </Typography>
-        <Typography variant="body2" component="p">
-          {plot}
-        </Typography> */}
       </CardContent>
       <CardActions>
         <Button size="small" value={id} onClick={e => {handleClick(id, 'picture')}}>Best Picture</Button>
