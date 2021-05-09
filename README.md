@@ -22,7 +22,7 @@ This project was created as a quick serverless React Application:
 
 ## Demo 
 
-[demo app here]()
+[demo app here](https://shoppies-bt.netlify.app/)
 
 
 ![Shoppies]()
@@ -36,6 +36,7 @@ This project was created as a quick serverless React Application:
 * Axios
 * Material UI
 * dotenv
+* Netlify
 
 
 
