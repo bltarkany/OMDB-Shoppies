@@ -3,6 +3,6 @@ require('dotenv').config();
 
 export default {
     searchMovie: function(query){
-        return axios.get(`https://www.omdbapi.com/?t=${query}&apikey=${process.env.REACT_APP_API_KEY}`)
+        return axios.get(`https://www.omdbapi.com/?s=${query}&apikey=${process.env.REACT_APP_API_KEY}`)
     }
 }
