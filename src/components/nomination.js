@@ -4,11 +4,9 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import MovieFilterRoundedIcon from '@material-ui/icons/MovieFilterRounded';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
@@ -17,11 +15,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    // '& > *': {
-    //   margin: theme.spacing(1),
-    //   width: theme.spacing(48),
-    //   height: theme.spacing(16),
-    // },
   },
   paperWidth: {
       width: '100%',
@@ -29,13 +22,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// function generate(element) {
-//   return [0, 1, 2].map((value) =>
-//     React.cloneElement(element, {
-//       key: value,
-//     })
-//   );
-// }
 
 export default function Nomination({results, handleDelete, category}) {
   const classes = useStyles();
