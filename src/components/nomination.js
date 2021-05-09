@@ -17,35 +17,35 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
   },
   paperWidth: {
-      width: '100%',
-      padding: '20px'
-  }
+    width: '100%',
+    padding: '20px',
+  },
 }));
 
-
-export default function Nomination({results, handleDelete, category}) {
+export default function Nomination({ results, handleDelete, category }) {
   const classes = useStyles();
-  const [dense, setDense] = React.useState(false);
-  const [secondary, setSecondary] = React.useState(false);
 
   return (
     <div className={classes.root}>
       <Paper elevation={3} className={classes.paperWidth}>
-      <Typography variant='h6' component='h4' gutterBottom>
-            Nominees for best {category}...
-          </Typography>
-        <List dense={dense}>
-          {results.map((nom) =>(
+        <Typography variant='h6' component='h4' gutterBottom>
+          Nominees for best {category}...
+        </Typography>
+        <List>
+          {results.map((nom) => (
             <ListItem key={nom.imdbID}>
               <ListItemIcon>
                 <MovieFilterRoundedIcon />
               </ListItemIcon>
-              <ListItemText
-                primary={nom.Title}
-                secondary={secondary ? 'Secondary text' : null}
-              />
+              <ListItemText primary={nom.Title} />
               <ListItemSecondaryAction>
-                <IconButton edge='end' aria-label='delete' id={nom.imdbID} onClick={(e)=>{handleDelete(nom.imdbID, category)}}>
+                <IconButton
+                  edge='end'
+                  aria-label='delete'
+                  id={nom.imdbID}
+                  onClick={(e) => {
+                    handleDelete(nom.imdbID, category);
+                  }}>
                   <DeleteForeverRoundedIcon />
                 </IconButton>
               </ListItemSecondaryAction>
