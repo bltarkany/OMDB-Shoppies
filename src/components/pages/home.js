@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#e32402',
   },
   marFix: {
-      marginTop: '24px'
-  }
+    marginTop: '24px',
+  },
 }));
 
 const localPic = JSON.parse(localStorage.getItem('picture')) || [];
@@ -41,25 +41,22 @@ export default function Home() {
     e.preventDefault();
     setSearching(true);
     const data = await API.searchMovie(search);
-    console.log(data.data.Search);
     setResult(data.data.Search);
-     await setSearching(false);
+    await setSearching(false);
 
     document.getElementById('outlined-full-width').value = '';
   };
 
   const handleClick = (id, category) => {
-    console.log(id, category);
     let movie = result.filter((x) => x.imdbID === id);
-    console.log(movie);
     switch (category) {
       case 'picture':
         setPicture([...picture, movie[0]]);
-        localStorage.setItem('picture', JSON.stringify([...picture, movie[0]]))
+        localStorage.setItem('picture', JSON.stringify([...picture, movie[0]]));
         break;
       case 'score':
         setScore([...score, movie[0]]);
-        localStorage.setItem('score', JSON.stringify([...score, movie[0]]))
+        localStorage.setItem('score', JSON.stringify([...score, movie[0]]));
         break;
       default:
         break;
@@ -67,20 +64,18 @@ export default function Home() {
   };
 
   const handleDelete = (id, category) => {
-    console.log(id, category);
     let filtered;
     switch (category) {
       case 'picture':
         filtered = picture.filter((x) => x.imdbID !== id);
         setPicture(filtered);
-        localStorage.setItem('picture', JSON.stringify(filtered))
+        localStorage.setItem('picture', JSON.stringify(filtered));
         break;
       case 'score':
         filtered = score.filter((x) => x.imdbID !== id);
         setScore(filtered);
-        localStorage.setItem('score', JSON.stringify(filtered))
+        localStorage.setItem('score', JSON.stringify(filtered));
         break;
-
       default:
         break;
     }
@@ -130,14 +125,18 @@ export default function Home() {
             <Progress />
           ) : (
             <Grid container spacing={2} justify='center'>
-              <Grid container spacing={2} justify='center' className={classes.marFix}>
+              <Grid
+                container
+                spacing={2}
+                justify='center'
+                className={classes.marFix}>
                 {/* <Grid item xs={12} justify='center'> */}
-                  <Button
-                    variant='contained'
-                    color='secondary'
-                    onClick={handleClear}>
-                    Clear
-                  </Button>
+                <Button
+                  variant='contained'
+                  color='secondary'
+                  onClick={handleClear}>
+                  Clear
+                </Button>
                 {/* </Grid> */}
               </Grid>
               {result.map((res) => (
