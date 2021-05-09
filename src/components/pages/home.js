@@ -1,3 +1,4 @@
+/* eslint-disable no-extend-native */
 import React, { useState } from 'react';
 import Navbar from '../navbar';
 import { makeStyles } from '@material-ui/core';
