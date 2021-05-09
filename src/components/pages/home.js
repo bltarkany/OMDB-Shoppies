@@ -26,14 +26,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const localPic = JSON.parse(localStorage.getItem('picture')) || [];
+const localScore = JSON.parse(localStorage.getItem('score')) || [];
+
 export default function Home() {
   const classes = useStyles();
   const [search, setSearch] = useState('');
   const [searching, setSearching] = useState(false);
   //   const [movie, setMovie] = useState({});
   const [result, setResult] = useState([]);
-  const [picture, setPicture] = useState([]);
-  const [score, setScore] = useState([]);
+  const [picture, setPicture] = useState(localPic);
+  const [score, setScore] = useState(localScore);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +44,7 @@ export default function Home() {
     const data = await API.searchMovie(search);
     console.log(data.data.Search);
     setResult(data.data.Search);
-    setSearching(false);
+     await setSearching(false);
 
     document.getElementById('outlined-full-width').value = '';
   };
@@ -52,10 +55,12 @@ export default function Home() {
     console.log(movie);
     switch (category) {
       case 'picture':
-        setPicture([movie[0], ...picture]);
+        setPicture([...picture, movie[0]]);
+        localStorage.setItem('picture', JSON.stringify(picture))
         break;
       case 'score':
-        setScore([movie[0], ...score]);
+        setScore([...score, movie[0]]);
+        localStorage.setItem('score', JSON.stringify(score))
         break;
       default:
         break;
@@ -69,10 +74,12 @@ export default function Home() {
       case 'picture':
         filtered = picture.filter((x) => x.imdbID !== id);
         setPicture(filtered);
+        localStorage.setItem('picture', JSON.stringify(filtered))
         break;
       case 'score':
         filtered = score.filter((x) => x.imdbID !== id);
         setScore(filtered);
+        localStorage.setItem('score', JSON.stringify(filtered))
         break;
 
       default:
