@@ -33,7 +33,6 @@ export default function Home() {
   const classes = useStyles();
   const [search, setSearch] = useState('');
   const [searching, setSearching] = useState(false);
-  //   const [movie, setMovie] = useState({});
   const [result, setResult] = useState([]);
   const [picture, setPicture] = useState(localPic);
   const [score, setScore] = useState(localScore);
@@ -56,11 +55,11 @@ export default function Home() {
     switch (category) {
       case 'picture':
         setPicture([...picture, movie[0]]);
-        localStorage.setItem('picture', JSON.stringify(picture))
+        localStorage.setItem('picture', JSON.stringify([...picture, movie[0]]))
         break;
       case 'score':
         setScore([...score, movie[0]]);
-        localStorage.setItem('score', JSON.stringify(score))
+        localStorage.setItem('score', JSON.stringify([...score, movie[0]]))
         break;
       default:
         break;
