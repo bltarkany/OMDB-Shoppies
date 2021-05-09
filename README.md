@@ -25,7 +25,7 @@ This project was created as a quick serverless React Application:
 [demo app here](https://shoppies-bt.netlify.app/)
 
 
-![Shoppies](src\components\assets\screenshot.png)
+![Shoppies]('./src/components/assets/screenshot.png')
 
 
 
