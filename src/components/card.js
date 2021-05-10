@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   
 });
 
-export default function Movie({title, year, type, id, handleClick }) {
+export default function Movie({title, year, type, id, handleClick, }) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -40,8 +40,8 @@ export default function Movie({title, year, type, id, handleClick }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" value={id} onClick={e => {handleClick(id, 'picture')}}>Best Picture</Button>
-        <Button size="small" value={id} onClick={e => {handleClick(id, 'score')}}>Best Original Score</Button>   
+        <Button size="small" id={`pic-${id}`} value={id} onClick={e => {handleClick(e, id, 'picture')}}>Best Picture</Button>
+        <Button size="small" id={`score-${id}`} value={id} onClick={e => {handleClick(e, id, 'score')}}>Best Original Score</Button>   
       </CardActions>
     </Card>
   );
