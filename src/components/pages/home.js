@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
 import API from '../../utils/api';
 import Progress from '../progress';
 import Movie from '../card';
@@ -24,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   marFix: {
     marginTop: '24px',
   },
+  // btn: {
+  //   dis
+  // }
 }));
 
 const localPic = JSON.parse(localStorage.getItem('picture')) || [];
@@ -31,11 +35,24 @@ const localScore = JSON.parse(localStorage.getItem('score')) || [];
 
 export default function Home() {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [searching, setSearching] = useState(false);
   const [result, setResult] = useState([]);
   const [picture, setPicture] = useState(localPic);
   const [score, setScore] = useState(localScore);
+  const [newMovie, setNewMovie] = useState('No current results.');
+
+  const apiCall = async (val) => {
+    const data = await API.searchMovie(val);
+    if (data.data.Response === 'False') {
+      setNewMovie(data.data.Error);
+      await setSearching(false);
+    } else {
+      await setResult(data.data.Search);
+      await setSearching(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,16 +64,37 @@ export default function Home() {
     document.getElementById('outlined-full-width').value = '';
   };
 
-  const handleClick = (id, category) => {
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+    setSearching(true);
+    apiCall(e.target.value);
+  };
+
+  const handleClick = (e, id, category) => {
+    console.log(document.getElementById(id));
     let movie = result.filter((x) => x.imdbID === id);
     switch (category) {
       case 'picture':
-        setPicture([...picture, movie[0]]);
-        localStorage.setItem('picture', JSON.stringify([...picture, movie[0]]));
+        if (picture.length === 5) {
+          setOpen(true);
+        } else {
+          document.getElementById(`pic-${id}`).classList.add('Mui-disabled');
+          setPicture([...picture, movie[0]]);
+          localStorage.setItem(
+            'picture',
+            JSON.stringify([...picture, movie[0]])
+          );
+        }
         break;
       case 'score':
-        setScore([...score, movie[0]]);
-        localStorage.setItem('score', JSON.stringify([...score, movie[0]]));
+        if (score.length === 5) {
+          setOpen(true);
+        } else {
+          document.getElementById(`score-${id}`).classList.add('Mui-disabled');
+          setScore([...score, movie[0]]);
+          localStorage.setItem('score', JSON.stringify([...score, movie[0]]));
+        }
         break;
       default:
         break;
@@ -81,8 +119,14 @@ export default function Home() {
     }
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleClear = (e) => {
     e.preventDefault();
+    document.getElementById('outlined-full-width').value = '';
+    setNewMovie('No current results');
     setResult([]);
   };
 
@@ -94,6 +138,13 @@ export default function Home() {
   return (
     <Grid container spacing={2}>
       <Navbar />
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={open}
+        onClose={handleClose}
+        message='That category is full. Please delete a title to add new nominee'
+        autoHideDuration={6000}
+      />
       <Grid container spacing={3} justify='center'>
         <Grid item xs={10} md={6}>
           <form
@@ -113,15 +164,16 @@ export default function Home() {
                 shrink: true,
               }}
               variant='outlined'
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={handleChange}
             />
           </form>
         </Grid>
       </Grid>
       <Grid container spacing={8} justify='center'>
         <Grid item xs={10} md={8}>
+          <br />
           {!result.length ? (
-            <h3>No current results.</h3>
+            <h3>{newMovie}</h3>
           ) : searching ? (
             <Progress />
           ) : (
@@ -131,14 +183,12 @@ export default function Home() {
                 spacing={2}
                 justify='center'
                 className={classes.marFix}>
-                {/* <Grid item xs={12} justify='center'> */}
                 <Button
                   variant='contained'
                   color='secondary'
                   onClick={handleClear}>
                   Clear
                 </Button>
-                {/* </Grid> */}
               </Grid>
               {result.map((res) => (
                 <Grid item xs={12} sm={6}>
